@@ -1,17 +1,21 @@
 #include <stdio.h>
-#include <stdbool.h>
+#include <stdlib.h>
 
+#include "hashtable.h"
 
+// ...
 
+int main() {
 
-
-int main(){
-
-    printf("Set in C (no pythonfags)\n");
-    printf("ener name of the dict  ");
-    char DictName[64] = {'\0'};
-    scanf("%[^\n]%*c", DictName);
+    Data data;
+    data.type = __int;
+    data._int = 228;
+    printf("Data - int = %d", data._int);  
     
+    printf("\nhashed value = %u\n\n", md5hash(data));
 
+    // ...
+    
+    //free(set); // Не забудьте освободить память
     return 0;
-}   
+}

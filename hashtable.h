@@ -1,24 +1,15 @@
 #pragma once
-#define DEFAULT_HASH_TABLE_SIZE 10000
+#define HASH_MAP_SIZE 65536
 
 
-typedef struct {
-    union hashtable
-    {
-        int _int;
-        char _char;
-        float _float;
-    };
-} data;
+typedef struct Data{
+    enum type{
+        __int, __char, __float
+    }type;
+    int _int;
+    char _char[64];
+    float _float;
+} Data;
 
-typedef struct Entry{
-    char* Key; 
-    data Data;
-    Entry* next;
-} Entry;
-
-typedef struct HashTable {
-    Entry *entries[DEFAULT_HASH_TABLE_SIZE];
-} HashTable;
 
 

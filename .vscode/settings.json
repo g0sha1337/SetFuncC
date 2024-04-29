@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "stdbool.h": "c",
+        "hashtable.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}
