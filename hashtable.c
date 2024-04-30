@@ -1,8 +1,5 @@
-//#include <openssl/md5.h>
-//#include <stdbool.h>
 #include "hashtable.h"
 
-#define MD5_DIGEST_LENGTH 32
 
 Data* InitData(DataType type) {
 	Data* data = (Data*)malloc(sizeof(Data));
@@ -13,4 +10,7 @@ Data* InitData(DataType type) {
 	
 	return data;
 }
-
+void FreeData(Data* data){
+	if (data->type == CHAR_TYPE) free(data->Char);
+	free(data);
+}

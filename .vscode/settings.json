@@ -1,7 +1,11 @@
 {
     "files.associations": {
         "stdbool.h": "c",
-        "hashtable.h": "c"
+        "hashtable.h": "c",
+        "stdio.h": "c",
+        "stdlib.h": "c",
+        "string.h": "c",
+        "math.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

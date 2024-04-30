@@ -1,5 +1,5 @@
 #pragma once
-#define HASHTABLE_SIZE 65536
+#include "hashtable.h"
 
 
 unsigned int HashData(Data* data);

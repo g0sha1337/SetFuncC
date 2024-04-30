@@ -1,5 +1,5 @@
 #pragma once
-#define HASH_MAP_SIZE 65536
+#define HASHTABLE_SIZE 65536
 
 typedef enum {
     INT_TYPE, CHAR_TYPE, FLOAT_TYPE
@@ -13,4 +13,4 @@ typedef struct Data{
 } Data;
 
 Data* InitData(DataType type);
-
+void FreeData(Data* data);
