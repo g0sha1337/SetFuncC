@@ -1,15 +1,16 @@
 #pragma once
 #define HASH_MAP_SIZE 65536
 
+typedef enum {
+    INT_TYPE, CHAR_TYPE, FLOAT_TYPE
+} DataType;
 
 typedef struct Data{
-    enum type{
-        __int, __char, __float
-    }type;
-    int _int;
-    char _char[64];
-    float _float;
+    DataType type;
+    int Int;
+    char* Char;
+    float Float;
 } Data;
 
-
+Data* InitData(DataType type);
 

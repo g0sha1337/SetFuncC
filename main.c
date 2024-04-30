@@ -2,17 +2,17 @@
 #include <stdlib.h>
 
 #include "hashtable.h"
-
+#include "hash.h"
 // ...
 
 int main() {
 
-    Data data;
-    data.type = __int;
-    data._int = 228;
-    printf("Data - int = %d", data._int);  
+    Data* data = InitData(CHAR_TYPE);
     
-    printf("\nhashed value = %u\n\n", md5hash(data));
+    strcpy(data->Char, "228");
+    printf("Data - chae = %s", data->Char);  
+    
+    printf("\nhashed value = %u\n\n", hash_data(data));
 
     // ...
     
