@@ -1,7 +1,8 @@
 #include <string.h>
+
 #include "hash.h"
 #include "hashtable.h"
-unsigned int HashData(Data* data) {
+unsigned int HashData(Data* data, int size) {
 
 	unsigned long hashed = 0;
 	unsigned int magic = 1337; //some magic number of hash func
@@ -25,5 +26,5 @@ unsigned int HashData(Data* data) {
 			//exit(-1);
 			break;
 	}
-	return hashed < HASHTABLE_SIZE ? hashed : hashed % HASHTABLE_SIZE;
+	return hashed < size ? hashed : hashed % size;
 }

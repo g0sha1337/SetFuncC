@@ -1,39 +1,32 @@
 #pragma once
-#define HASHTABLE_SIZE 65536 //2**16
-
+#include <stdlib.h>
+#include <stdbool.h>
+#include "data.h"
 //Data
-typedef enum {
-    INT_TYPE, CHAR_TYPE, FLOAT_TYPE
-} DataType;
 
-typedef struct Data{
-    DataType type;
-    int Int;
-    char* Char;
-    float Float;
-} Data;
 
 
 //HashTable
+typedef struct Node {
+    int key;                // Ключ узла
+    Data value;              // Значение, связанное с ключом
+    struct Node* next;  // Указатель на следующий элемент в цепочке
+} Node;
 
-typedef struct HtItem{
-    char* key; 
-    char* value;
-} HtItem;
-
-typedef struct HashTable{
-    HtItem** items;
-    int size;
-    int count;
+typedef struct HashTable { //hash table
+    int size;        // Размер массива
+    Node** array; // Массив указателей на элементы (узлы) списков
 } HashTable;
 
-HtItem* CreateItem(char* key, char* value);
-HashTable* CreateTable(int size);
-
-
-
-Data* InitData(DataType type);
-void FreeData(Data* data);
-void FreeItem(HtItem* item);
-void FreeTable(HashTable* table);
-void PrintTable(HashTable* ht);
+bool EqualData(Data data1, Data data2);
+HashTable* CreateHashTable(int size);
+void freeHashTable(HashTable* ht, int size);
+void InsertHashTable(HashTable* ht,  Data value);
+bool removeElement(HashTable* ht, Data element);
+void printSet(char* SetName, HashTable* ht);
+//void printData(Data data);
+//void printHashTable(HashTable* table);
+bool InitializeFromIntArray(HashTable* ht, int* array, int size);
+bool InitializeFromFloatArray(HashTable* ht, float* array, int size);
+bool InitializeFromCharArray(HashTable* ht, char** array, int size);
+bool isElementInSet(HashTable* ht, Data element);

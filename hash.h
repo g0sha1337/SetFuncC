@@ -2,4 +2,4 @@
 #include "hashtable.h"
 
 
-unsigned int HashData(Data* data);
+unsigned int HashData(Data* data, int size);
