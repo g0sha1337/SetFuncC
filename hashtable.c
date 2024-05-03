@@ -2,20 +2,19 @@
 #include <malloc.h>
 #include <string.h>
 
-
 #include "hashtable.h"
 #include "hash.h"
 
 bool EqualData(Data data1, Data data2) {
 	if (data1.type == data2.type) {
 		if (data1.type == FLOAT_TYPE) {
-			if (data1.Float == data2.Float) return true;
+			return data1.Float == data2.Float;
 		}
 		else if (data1.type == INT_TYPE) {
-			if (data1.Int == data2.Int) return true;
+			return data1.Int == data2.Int;
 		}
 		else if (data1.type == CHAR_TYPE) {
-			if (strcmp(data1.Char, data2.Char) == 0) return true;
+			return strcmp(data1.Char, data2.Char) == 0;
 		}
 	}
 
@@ -83,7 +82,6 @@ void InsertHashTable(HashTable* ht, Data value) {
 		ht->array[index] = newNode;
 	}
 }
-
 bool removeElement(HashTable* ht, Data element) {
 	unsigned int bucket = HashData(&element, ht->size);
 	Node* curr = ht->array[bucket];
@@ -104,8 +102,6 @@ bool removeElement(HashTable* ht, Data element) {
 	return false;
 
 }
-
-
 bool InitializeFromIntArray(HashTable* ht, int* array, int size) {
 	for (int i = 0; i < size; i++) {
 		Data* element = InitData(INT_TYPE);
@@ -114,7 +110,6 @@ bool InitializeFromIntArray(HashTable* ht, int* array, int size) {
 		FreeData(element);
 	}
 }
-
 bool InitializeFromFloatArray(HashTable* ht, float* array, int size) {
 	for (int i = 0; i < size; i++) {
 		Data* element = InitData(FLOAT_TYPE);
@@ -133,31 +128,23 @@ bool InitializeFromCharArray(HashTable* ht, char** array, int size) {
 }
 
 bool isElementInSet(HashTable* ht, Data element) {
-	Node* newNode = (Node*)malloc(sizeof(Node));
-
-	newNode->next = NULL;
-	newNode->value = element;
 	int index = HashData(&element, ht->size);
-	if (ht->array[HashData(&element, ht->size)] == NULL) return false;
-	else if (ht->array[HashData(&element, ht->size)] != NULL) {
-		if (element.type == FLOAT_TYPE) {
-			if (ht->array[index]->value.Float == element.Float) {
-				return true;
+	while (ht->array[index] != NULL) {
+		if (ht->array[index]->value.type == element.type) {
+			if (element.type == FLOAT_TYPE) {
+				return ht->array[index]->value.Float == element.Float;
+			}
+			if (element.type == INT_TYPE) {
+				return ht->array[index]->value.Int == element.Int;
+			}
+			if (element.type == CHAR_TYPE) {
+				return strcmp(ht->array[index]->value.Char, element.Char) == 0;
 			}
 		}
-		else if (element.type == INT_TYPE) {
-			if (ht->array[index]->value.Int == element.Int) {
-				return true;
-			}
-		}
-		else if (element.type == CHAR_TYPE) {
-			if ((strcmp(ht->array[index]->value.Char, element.Char))) {
-				return true;
-			}
-		}
+		break;
 	}
+	//if (ht->array[index] == NULL) printf("\n\n\n\nht->array[i] == NULL  --->  TRUE\n\n");
 	return false;
-
 }
 
 

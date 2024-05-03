@@ -7,10 +7,10 @@
 #include "hashtable.h"
 #include "hash.h"
 #include "frontend.h"
-// ...
+
 
 int main() {
-    int size =1;
+    int size = 16;
 
     Data* data = InitData(FLOAT_TYPE);
    
@@ -22,13 +22,13 @@ int main() {
     
     printf("\nHashed value = %u\n\n", HashData(data, size));
 
-    // ...
+
     Data* data2 = InitData(INT_TYPE);
     data2->Int = 228;
     Data* data3 = InitData(INT_TYPE);
     data3->Int = 229;
     Data* data4 = InitData(CHAR_TYPE);
-    strcpy(data4->Char, "normaldaky");
+    strcpy(data4->Char, "some_words123");
     HashTable* hashtable = CreateHashTable(size);
 
     InsertHashTable(hashtable, *data2);
@@ -39,13 +39,21 @@ int main() {
     //removeElement(hashtable, *data);
     //removeElement(hashtable, *data2);
     //removeElement(hashtable, *data3);
-    //InputIntArray();
     if (isElementInSet(hashtable, *data4)) {
         printf("YES!!!!\n");
     } else printf("No.\n\n");
     printSet("A", hashtable);
     printHashTable(hashtable);
-    printf("everything ok");
+    
+
+    /*InputIntArray();*/
+
+    /*if (isElementInSet(hashtable, *data)) {
+        printf("data exist in hashtable");
+    }
+    else {
+        printf("data not found");
+    }*/
     FreeData(data);
     freeHashTable(hashtable, size);
     return 0;
