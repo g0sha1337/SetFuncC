@@ -82,6 +82,8 @@ void InsertHashTable(HashTable* ht, Data value) {
 		ht->array[index] = newNode;
 	}
 }
+
+// code inspection
 bool removeElement(HashTable* ht, Data element) {
 	unsigned int bucket = HashData(&element, ht->size);
 	Node* curr = ht->array[bucket];
@@ -95,8 +97,16 @@ bool removeElement(HashTable* ht, Data element) {
 			else {
 				prev->next = curr->next;
 			}
+
+
 			free(curr);
 			return true;
+		}
+		
+		if (curr->next != (void*)0) { //yaya ima stupid prog kid that likes bad code
+
+			prev = curr;
+			curr = curr->next;
 		}
 	}
 	return false;
@@ -129,19 +139,30 @@ bool InitializeFromCharArray(HashTable* ht, char** array, int size) {
 
 bool isElementInSet(HashTable* ht, Data element) {
 	int index = HashData(&element, ht->size);
-	while (ht->array[index] != NULL) {
-		if (ht->array[index]->value.type == element.type) {
+
+	Node* temp = ht->array[index];
+
+
+	while (temp != NULL) {
+
+
+
+		if (temp->value.type == element.type) {
 			if (element.type == FLOAT_TYPE) {
-				return ht->array[index]->value.Float == element.Float;
+				return temp->value.Float == element.Float;
 			}
 			if (element.type == INT_TYPE) {
-				return ht->array[index]->value.Int == element.Int;
+				return temp->value.Int == element.Int;
 			}
 			if (element.type == CHAR_TYPE) {
-				return strcmp(ht->array[index]->value.Char, element.Char) == 0;
+				return strcmp(temp->value.Char, element.Char) == 0;
 			}
 		}
-		break;
+		else if (temp->next != NULL) {
+			temp = temp->next;
+		}
+		else if (temp = NULL) break;
+		else break;
 	}
 	//if (ht->array[index] == NULL) printf("\n\n\n\nht->array[i] == NULL  --->  TRUE\n\n");
 	return false;

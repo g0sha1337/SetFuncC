@@ -10,7 +10,7 @@
 
 
 int main() {
-    int size = 16;
+    int size = 1;
 
     Data* data = InitData(FLOAT_TYPE);
    
@@ -37,11 +37,11 @@ int main() {
     InsertHashTable(hashtable, *data4);
 
     //removeElement(hashtable, *data);
-    //removeElement(hashtable, *data2);
+    removeElement(hashtable, *data3);
     //removeElement(hashtable, *data3);
-    if (isElementInSet(hashtable, *data4)) {
+    if (isElementInSet(hashtable, *data2)) {
         printf("YES!!!!\n");
-    } else printf("No.\n\n");
+    } else printf("Inspection didnt find that element.\n\n");
     printSet("A", hashtable);
     printHashTable(hashtable);
     
