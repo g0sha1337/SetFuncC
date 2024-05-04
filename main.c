@@ -3,14 +3,22 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+
+
 #include "data.h"
 #include "hashtable.h"
 #include "hash.h"
 #include "frontend.h"
-
+#include "manager.h"
 
 int main() {
-    int size = 1;
+
+    ListOfSets* mainlist = initListOfSets(10);
+
+
+    freeListOfSets(mainlist);
+
+    int size = 10;
 
     Data* data = InitData(FLOAT_TYPE);
    
@@ -42,7 +50,7 @@ int main() {
     if (isElementInSet(hashtable, *data2)) {
         printf("YES!!!!\n");
     } else printf("Inspection didnt find that element.\n\n");
-    printSet("A", hashtable);
+    printSet( hashtable, "A");
     printHashTable(hashtable);
     
 

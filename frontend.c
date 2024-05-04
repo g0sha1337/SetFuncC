@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include "data.h"
 #include "hashtable.h"
+#include "manager.h"
+
 
 void printData(Data data) {
 	switch (data.type) {
@@ -15,7 +17,8 @@ void printData(Data data) {
 		printf("Float: %f", data.Float);
 		break;
 	}
-}void printShortData(Data data) {
+}
+void printShortData(Data data) {
 	switch (data.type) {
 	case INT_TYPE:
 		printf("%d ", data.Int);
@@ -30,7 +33,7 @@ void printData(Data data) {
 }
 void printHashTable(HashTable* table) {
 	if (table == NULL) {
-		printf("EMPTY\n\n");
+		printf("HASHTABLE IS EMPTY!\n\n");
 		return;
 	}
 
@@ -48,7 +51,7 @@ void printHashTable(HashTable* table) {
 	}
 }
 
-void printSet(char* SetName, HashTable* ht) {
+void printSet(HashTable* ht,char* SetName) {
 	printf("%s = ", SetName);
 
 	if (ht == NULL) {
@@ -71,4 +74,28 @@ void printSet(char* SetName, HashTable* ht) {
 	printf("}\n\n");
 
 }
+void AskNameOfSet(char* str) {
+	//char* name = (char*)malloc(64 * sizeof(char)); //TODO: add free to 
+	//if (!name) {
+	//	printf("Some error with allocating memory..");
+	//	exit(-1);
+	//}
+	printf("Enter name of new set:  ");
+	fscanf_s("%[^\n]%*c", str);
+	
 
+	//return name;
+}
+void printNode(SetNode* node) {
+	printf("[%d]   ", node->num);
+	printSet(node->ht, node->name);
+	printf("\n");
+	printHashTable(node->ht);
+}
+void printList(ListOfSets* list) {
+	printf("                                         List of sets\n\n\n");
+	for (int i = 0; i < list->size; i++) {
+		printNode(&(list->SetArray[i]));
+	}
+
+}

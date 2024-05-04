@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "data.h"
-//Data
-
+#define DEFAULT_HASHTABLESIZE 32
 
 
 //HashTable

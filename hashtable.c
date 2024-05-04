@@ -20,7 +20,6 @@ bool EqualData(Data data1, Data data2) {
 
 	return false;
 }
-
 HashTable* CreateHashTable(int size) {
 	HashTable* ht = (HashTable*)malloc(sizeof(HashTable));
 	if (!(ht)) {
@@ -39,7 +38,6 @@ HashTable* CreateHashTable(int size) {
 
 	return ht;
 }
-
 void freeHashTable(HashTable* ht, int size) {
 	for (int i = 0; i < size; i++) {
 		if (ht->array[i]) free(ht->array[i]);
@@ -47,7 +45,6 @@ void freeHashTable(HashTable* ht, int size) {
 	free(ht->array);
 	free(ht);
 }
-
 void InsertHashTable(HashTable* ht, Data value) {
 	int index = HashData(&value, ht->size);
 	Node* newNode = (Node*)malloc(sizeof(Node));
@@ -82,7 +79,6 @@ void InsertHashTable(HashTable* ht, Data value) {
 		ht->array[index] = newNode;
 	}
 }
-
 // code inspection
 bool removeElement(HashTable* ht, Data element) {
 	unsigned int bucket = HashData(&element, ht->size);
