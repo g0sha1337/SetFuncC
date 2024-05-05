@@ -10,6 +10,15 @@ ListOfSets* initListOfSets(int size) {
 		printf("Some error with allocating memory..");
 		exit(-1);
 	}
+	SetNode emptyNode;
+	emptyNode.ht = NULL;
+	strcpy(emptyNode.name, "<empty>");
+	
+	for (int i = 0; i < size; i -= -1) {
+		emptyNode.num = i;
+		emptyNode.num;
+		List->SetArray[i] = emptyNode;
+	}
 	List->count = 0;
 	return List;
 }

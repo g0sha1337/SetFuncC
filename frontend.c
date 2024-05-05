@@ -1,5 +1,6 @@
-#define _CRT_SECURE_NO_WARNINGS1
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
+#include <string.h>
 #include "data.h"
 #include "hashtable.h"
 #include "manager.h"
@@ -33,7 +34,7 @@ void printShortData(Data data) {
 }
 void printHashTable(HashTable* table) {
 	if (table == NULL) {
-		printf("HASHTABLE IS EMPTY!\n\n");
+		//printf("HASHTABLE IS EMPTY!\n\n");
 		return;
 	}
 
@@ -52,6 +53,8 @@ void printHashTable(HashTable* table) {
 }
 
 void printSet(HashTable* ht,char* SetName) {
+
+	if (strcmp(SetName, "<empty>") == 0) return;
 	printf("%s = ", SetName);
 
 	if (ht == NULL) {
@@ -87,7 +90,7 @@ void AskNameOfSet(char* str) {
 	//return name;
 }
 void printNode(SetNode* node) {
-	printf("[%d]   ", node->num);
+	printf("[%d]  ", node->num);
 	printSet(node->ht, node->name);
 	printf("\n");
 	printHashTable(node->ht);
@@ -98,4 +101,10 @@ void printList(ListOfSets* list) {
 		printNode(&(list->SetArray[i]));
 	}
 
+}
+
+
+int MainMenuOptions() {
+	printf("1-9 - choose set; ESC - exit");
+	return _getch();
 }
