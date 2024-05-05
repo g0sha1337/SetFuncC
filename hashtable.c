@@ -46,6 +46,8 @@ void freeHashTable(HashTable* ht, int size) {
 	free(ht);
 }
 void InsertHashTable(HashTable* ht, Data value) {
+	
+
 	int index = HashData(&value, ht->size);
 	Node* newNode = (Node*)malloc(sizeof(Node));
 	
@@ -165,3 +167,15 @@ bool isElementInSet(HashTable* ht, Data element) {
 }
 
 
+HashTable* MergeHashTables(HashTable* ht1, HashTable* ht2) {
+	HashTable* result = CreateHashTable(ht1->size + ht2->size);
+
+	for (int i = 0; i < ht1->size; i++) {
+		if (ht1->array[i] != NULL) InsertHashTable(result, ht1->array[i]->value);
+	}
+	for (int i = 0; i < ht2->size; i++) {
+		if (ht2->array[i] != NULL) InsertHashTable(result, ht2->array[i]->value);
+	}
+
+	return result;
+}

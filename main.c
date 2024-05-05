@@ -16,13 +16,15 @@ int main() {
     ListOfSets* mainlist = initListOfSets(10);
     printList(mainlist);
 
-    freeListOfSets(mainlist);
+    OptionPeekedMenu(MainMenuOptions(), mainlist);
 
-    //int size = 10;
+
+    freeListOfSets(mainlist);
+    int size = 10;
 
     //Data* data = InitData(FLOAT_TYPE);
    
-    //
+    
     ////strcpy(data->Char, "228");
     ////printf("Data - char = %s", data->Char);  
     //data->Float = 0.234;
@@ -31,16 +33,20 @@ int main() {
     //printf("\nHashed value = %u\n\n", HashData(data, size));
 
 
-    //Data* data2 = InitData(INT_TYPE);
-    //data2->Int = 228;
-    //Data* data3 = InitData(INT_TYPE);
-    //data3->Int = 229;
+    /*Data* data2 = InitData(INT_TYPE);
+    data2->Int = 228;
+    Data* data3 = InitData(INT_TYPE);
+    data3->Int = 229;*/
     //Data* data4 = InitData(CHAR_TYPE);
     //strcpy(data4->Char, "some_words123");
-    //HashTable* hashtable = CreateHashTable(size);
+    /*HashTable* hashtable = CreateHashTable(size);
+    HashTable* hashtable2 = CreateHashTable(size);*/
 
-    //InsertHashTable(hashtable, *data2);
-    //InsertHashTable(hashtable, *data3);
+    /*InsertHashTable(hashtable, *data2);
+    InsertHashTable(hashtable2, *data3);*/
+
+    /*HashTable* resulthashtable = MergeHashTables(hashtable, hashtable2);
+    printSet(resulthashtable, "res");*/
     //InsertHashTable(hashtable, *data);
     //InsertHashTable(hashtable, *data4);
 

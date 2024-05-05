@@ -1,9 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include <stdio.h>
-#include <string.h>
-#include "data.h"
-#include "hashtable.h"
-#include "manager.h"
+#include "frontend.h"
+
 
 
 void printData(Data data) {
@@ -105,6 +102,56 @@ void printList(ListOfSets* list) {
 
 
 int MainMenuOptions() {
-	printf("1-9 - choose set; ESC - exit");
+	printf("\n\n1-9 - choose set; ESC - exit\n");
 	return _getch();
+}
+void OptionPeekedMenu(int key, ListOfSets* list) {
+	if (key == 27) {
+		exit(0);
+	}
+	else if (key == 49) { // 1
+		SetOptinsMunu(list, key - 49);
+	}
+}
+
+bool SetOptinsMunu(ListOfSets* list, int index) {
+	system("cls");
+	printf("[%d] - ", index);
+	printNode(&list->SetArray[index]);
+	printf("\n\n1-Add new element\n2-Delete existing element\n");
+	int peeked = _getch();
+	if (peeked == 49) {
+		//add element
+	}
+	else if (peeked == 50) {
+		//delete element
+	}
+	else {
+		printf("worng key peeked...");
+		return false;
+	}
+	return true;
+}
+
+
+bool InputNewElement(HashTable* ht) {
+	printf("Enter type of element that you wanna add\n1-INTEGGER\n2-STRING\n3-FLOAT\n\n");
+	Data data;
+	int peeked = _getch();
+	if (peeked == 49) {
+		data.type == INT_TYPE;
+		printf("\nEnter value: ");
+		scanf_s("%d", &data.Int);
+		InsertHashTable(ht, data);
+	}
+	else if (peeked == 50) {
+		data.type == CHAR_TYPE;
+		//TODO
+	}
+	else if (peeked == 51) {
+		data.type == FLOAT_TYPE;
+		//TODO
+	}
+	else return false;
+	return true;
 }

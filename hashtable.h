@@ -29,3 +29,4 @@ bool InitializeFromIntArray(HashTable* ht, int* array, int size);
 bool InitializeFromFloatArray(HashTable* ht, float* array, int size);
 bool InitializeFromCharArray(HashTable* ht, char** array, int size);
 bool isElementInSet(HashTable* ht, Data element);
+HashTable* MergeHashTables(HashTable* ht1, HashTable* ht2);
