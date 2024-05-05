@@ -14,9 +14,13 @@
 int main() {
 
     ListOfSets* mainlist = initListOfSets(10);
-    printList(mainlist);
+    
 
-    OptionPeekedMenu(MainMenuOptions(), mainlist);
+    while (1) {
+        system("cls");
+        printList(mainlist);
+        OptionPeekedMenu(MainMenuOptions(), mainlist);
+    }
 
 
     freeListOfSets(mainlist);
