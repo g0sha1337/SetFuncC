@@ -131,7 +131,7 @@ bool ProcessTwoSets(ListOfSets* list, int index1,int index2) {
 	index2 -= 48;
 	printNode(&list->SetArray[index1 - 1], false);
 	printNode(&list->SetArray[index2 - 1], false);
-	pritnf("Enter operation: 1-merge, -...");
+	printf("Enter operation: 1-merge, -...");
 	int peeked = _getch();
 	char NewName[64] = { '\0' };
 	printf("Enter name of new set");
@@ -164,6 +164,7 @@ bool SetOptinsMunu(ListOfSets* list, int index) {
 	if (list->SetArray[index].ht == NULL) {
 		list->SetArray[index].ht = CreateHashTable(32);
 		printf("Set is empty. Please, enter name to new set: ");
+		//_getch();
 		scanf("%[^\n]%*c", list->SetArray[index].name);
 		printf("\nNew set successfully created!\n\n");
 
@@ -210,20 +211,20 @@ bool InputNewElement(HashTable* ht) {
 	if (peeked == 49) {
 		data.type = INT_TYPE;
 		printf("\nEnter value (integger): ");
-		scanf("%d", &data.Int);
+		scanf("%d%*c", &data.Int);
 		InsertHashTable(ht, data);
 	}
 	else if (peeked == 50) {
 		data.type = CHAR_TYPE;
 		printf("\nEnter value (string): ");
 		data.Char = (char*)malloc(64 * sizeof(char));
-		scanf("%s", data.Char);
+		scanf("%[^\n]%*c", data.Char);
 		InsertHashTable(ht, data);
 	}
 	else if (peeked == 51) {
 		data.type = FLOAT_TYPE;
 		printf("\nEnter value (float): ");
-		scanf("%f", &data.Float);
+		scanf("%f%*c", &data.Float);
 		InsertHashTable(ht, data);
 	} else return false;
 	
@@ -237,20 +238,20 @@ bool DeleteElement(HashTable* ht) {
 	if (peeked == 49) {
 		data.type = INT_TYPE;
 		printf("\nEnter value (integger): ");
-		scanf("%d", &data.Int);
+		scanf("%d%*c", &data.Int);
 		removeElement(ht, data);
 	}
 	else if (peeked == 50) {
 		data.type = CHAR_TYPE;
 		printf("\nEnter value (string): ");
 		data.Char = (char*)malloc(64 * sizeof(char));
-		scanf("%s", data.Char);
+		scanf("%%[^\n]%*c", data.Char);
 		removeElement(ht, data);
 	}
 	else if (peeked == 51) {
 		data.type = FLOAT_TYPE;
 		printf("\nEnter value (float): ");
-		scanf("%f", &data.Float);
+		scanf("%f%*c", &data.Float);
 		removeElement(ht, data);
 	}
 	else return false;

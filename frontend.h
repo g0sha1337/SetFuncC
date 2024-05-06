@@ -19,3 +19,4 @@ void OptionPeekedMenu(int key, ListOfSets* list);
 bool SetOptinsMunu(ListOfSets* list, int index);
 bool InputNewElement(HashTable* ht);
 bool DeleteElement(HashTable* ht);
+bool ProcessTwoSets(ListOfSets* list, int index1, int index2);
