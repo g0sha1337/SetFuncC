@@ -24,7 +24,7 @@ int main() {
 
 
     freeListOfSets(mainlist);
-    int size = 10;
+    //int size = 10;
 
     //Data* data = InitData(FLOAT_TYPE);
    

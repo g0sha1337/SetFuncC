@@ -35,7 +35,7 @@ void printHashTable(HashTable* table) {
 		return;
 	}
 
-	printf("HashTable\n\n");
+	printf("\n\n");
 	for (int i = 0; i < table->size; i++) {
 		printf("[%d]: ", i);
 		Node* head = table->array[i];
@@ -48,7 +48,6 @@ void printHashTable(HashTable* table) {
 		//printf("NULL\n");
 	}
 }
-
 void printSet(HashTable* ht,char* SetName) {
 
 	if (strcmp(SetName, "<empty>") == 0) {
@@ -90,8 +89,6 @@ void AskNameOfSet(char* str) {
 	//}
 	printf("Enter name of new set:  ");
 	fscanf_s("%[^\n]%*c", str);
-	
-
 	//return name;
 }
 void printNode(SetNode* node, bool ShowHashTable) {
@@ -107,8 +104,6 @@ void printList(ListOfSets* list) {
 	}
 
 }
-
-
 int MainMenuOptions() {
 	printf("\n\n1-9 - choose set; ESC - exit; SPACE-Process two sets\n");
 	return _getch();
@@ -124,38 +119,44 @@ void OptionPeekedMenu(int key, ListOfSets* list) {
 		SetOptinsMunu(list, 32);
 	}
 }
-
 bool ProcessTwoSets(ListOfSets* list, int index1,int index2) {
-	printf("Chosen sets:\n\n");
-	index1 -= 48; //char to ascii
-	index2 -= 48;
-	printNode(&list->SetArray[index1 - 1], false);
-	printNode(&list->SetArray[index2 - 1], false);
-	printf("Enter operation: 1-merge, -...");
+	printf("\nChosen sets:\n\n");
+	printNode(&list->SetArray[index1], false);
+	printNode(&list->SetArray[index2], false);
+	printf("\nEnter operation: 1-Union, 2-Intersection, 3-Difference\n");
 	int peeked = _getch();
-	char NewName[64] = { '\0' };
-	printf("Enter name of new set");
-	scanf("%[^\n]%*c", NewName);
-	if (peeked == 49) {
-		HashTable* NewHashTable = MergeHashTables(list->SetArray[index1].ht, list->SetArray[index2].ht);
-		//free first and second 
-		// pointer to lower element = new ht 
-		//TODO
 
+
+	if (peeked == 49) {
+		
+		if (index1 == index2) return false;
+		if (index1 < index2) {
+			list->SetArray[index1] = MergeTwoSets(&list->SetArray[index1], &list->SetArray[index2]);
+			list->SetArray[index2].ht = NULL;
+			strcpy(list->SetArray[index2].name, "<empty>");
+		}
+		else {
+			list->SetArray[index2] = MergeTwoSets(&list->SetArray[index1], &list->SetArray[index2]);
+			list->SetArray[index1].ht = NULL;
+			strcpy(list->SetArray[index1].name, "<empty>");
+		}
 	}
 
 }
 bool SetOptinsMunu(ListOfSets* list, int index) {
 	if (index == 32) {
-		system("cls");
+		//system("cls");
 		int Set1, Set2;
-		printf("Select thirst set to further operation");
-		Set1 = _getch() - 49;
-		printf("Select second set to further operation");
-		Set2 = _getch() - 49;
-		if (!(48 <= Set1 && Set1 <= 57 && 48 <= Set2 && Set2 <= 57)) return false;
+		printf("Select thirst set to further operation  ");
+		scanf("%d*c", &Set1);
+		printf("Select second set to further operation  ");
+		scanf("%d*c", &Set2);
+		//printf("set1 = %d\nset2 = %d", Set1, Set2);
+		//_getch();
+		system("cls"); 
+		if (!(1<=Set1 && Set1<=10 && 1 <= Set2 && Set2 <= 10)) return false;
 		
-		if (ProcessTwoSets(list, Set1, Set2)) return true;
+		if (ProcessTwoSets(list, Set1-1, Set2-1)) return true;
 		else return false;
 	}
 
@@ -170,7 +171,7 @@ bool SetOptinsMunu(ListOfSets* list, int index) {
 
 	}
 	printNode(&list->SetArray[index], false);
-	printf("\n\n1-Add new element\n2-Delete existing element");
+	printf("\n\n1-Add new element\n2-Delete element\n3-Show hashtable");
 	int peeked = _getch();
 	if (peeked == 49) {
 		
@@ -191,9 +192,16 @@ bool SetOptinsMunu(ListOfSets* list, int index) {
 			return true;
 		}
 		else {
-			printf("There is some error with deletion, probably element does not exist in set\n\n");
+			printf("Element is not contained in the set!\n\n");
+			_getch();
 			return false;
 		}
+	}
+	else if (peeked == 51) {
+		system("cls");
+		printNode(&list->SetArray[index], true);
+		printf("\n\nEnter any key to return to main menu..");
+		_getch();
 	}
 	
 	else {
@@ -202,8 +210,6 @@ bool SetOptinsMunu(ListOfSets* list, int index) {
 	} 
 	return true;
 }
-
-
 bool InputNewElement(HashTable* ht) {
 	printf("Enter type of element that you wanna add\n1-INTEGGER\n2-STRING\n3-FLOAT\n\n");
 	Data data;
@@ -230,7 +236,6 @@ bool InputNewElement(HashTable* ht) {
 	
 	return true; //element successfully added
 }
-
 bool DeleteElement(HashTable* ht) {
 	printf("Enter element for deletion\n1-INTEGGER\n2-STRING\n3-FLOAT\n\n");
 	Data data;
@@ -239,22 +244,32 @@ bool DeleteElement(HashTable* ht) {
 		data.type = INT_TYPE;
 		printf("\nEnter value (integger): ");
 		scanf("%d%*c", &data.Int);
-		removeElement(ht, data);
+		return removeElement(ht, data);
 	}
 	else if (peeked == 50) {
 		data.type = CHAR_TYPE;
 		printf("\nEnter value (string): ");
 		data.Char = (char*)malloc(64 * sizeof(char));
-		scanf("%%[^\n]%*c", data.Char);
-		removeElement(ht, data);
+		scanf("%[^\n]%*c", data.Char);
+		return removeElement(ht, data);
 	}
 	else if (peeked == 51) {
 		data.type = FLOAT_TYPE;
 		printf("\nEnter value (float): ");
 		scanf("%f%*c", &data.Float);
-		removeElement(ht, data);
+		return removeElement(ht, data);
 	}
 	else return false;
 
-	return true; //element successfully added
+	return true; //element successfully deleted
+}
+SetNode MergeTwoSets(SetNode* Set1, SetNode* Set2) {
+	SetNode ResultSet;
+	ResultSet.ht = MergeHashTables(Set1->ht, Set2->ht);
+	strcpy(ResultSet.name, Set1->name);
+	
+	return ResultSet;
+	//freeSetNode(set1);
+	//reeSetNode(set2);
+	//return setnode;
 }

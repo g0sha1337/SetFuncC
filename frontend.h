@@ -20,3 +20,4 @@ bool SetOptinsMunu(ListOfSets* list, int index);
 bool InputNewElement(HashTable* ht);
 bool DeleteElement(HashTable* ht);
 bool ProcessTwoSets(ListOfSets* list, int index1, int index2);
+SetNode MergeTwoSets(SetNode* Set1, SetNode* Set2);

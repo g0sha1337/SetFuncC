@@ -12,6 +12,7 @@ ListOfSets* initListOfSets(int size) {
 	}
 	SetNode emptyNode;
 	emptyNode.ht = NULL;
+
 	strcpy(emptyNode.name, "<empty>");
 	
 	for (int i = 0; i < size; i -= -1) {
@@ -39,17 +40,22 @@ void AddNodeToSet(ListOfSets* list, char* NewName) { //add new element to list o
 }
 
 
-SetNode* initNode() {
-	SetNode* setNode = (SetNode*)malloc(sizeof(SetNode));
-
-	if (!setNode) {
-		printf("Error with alocating memory..");
-		exit(-1);
-	}
-
-	setNode->ht = CreateHashTable(DEFAULT_HASHTABLESIZE);
-	AskNameOfSet(setNode->name);
-
-}
-
-
+//SetNode* initNode() {
+//
+//	SetNode* setNode = (SetNode*)malloc(sizeof(SetNode));
+//	//setNode->name = (char*)malloc(64 * sizeof(char));
+//	if (!setNode) {
+//		printf("Error with alocating memory..");
+//		exit(-1);
+//	}
+//
+//	setNode->ht = CreateHashTable(DEFAULT_HASHTABLESIZE);
+//	AskNameOfSet(&setNode->name);
+//
+//}
+//
+//
+//void freeSetNode(SetNode* setNode) {
+//	freeHashTable(setNode->ht, setNode->ht->size);
+//	free(setNode);
+//}

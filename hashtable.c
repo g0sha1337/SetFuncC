@@ -17,7 +17,6 @@ bool EqualData(Data data1, Data data2) {
 			return strcmp(data1.Char, data2.Char) == 0;
 		}
 	}
-
 	return false;
 }
 HashTable* CreateHashTable(int size) {
@@ -168,7 +167,14 @@ bool isElementInSet(HashTable* ht, Data element) {
 
 
 HashTable* MergeHashTables(HashTable* ht1, HashTable* ht2) {
-	HashTable* result = CreateHashTable(ht1->size + ht2->size);
+	if (ht1 == NULL && ht2 == NULL) {
+		return CreateHashTable(32);
+	}
+
+	int size = 0;
+	size += ht1 == NULL ? 0 : ht1->size;
+	size += ht2 == NULL ? 0 : ht2->size;
+	HashTable* result = CreateHashTable(size);
 
 	for (int i = 0; i < ht1->size; i++) {
 		if (ht1->array[i] != NULL) InsertHashTable(result, ht1->array[i]->value);
