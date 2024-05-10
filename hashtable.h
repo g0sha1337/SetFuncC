@@ -31,3 +31,4 @@ bool InitializeFromCharArray(HashTable* ht, char** array, int size);
 bool isElementInSet(HashTable* ht, Data element);
 HashTable* MergeHashTables(HashTable* ht1, HashTable* ht2);
 HashTable* IntersectHashTables(HashTable* ht1, HashTable* ht2);
+void DeleteElementsThatContainInSecondHashTable(HashTable* ht1, HashTable* ht2);

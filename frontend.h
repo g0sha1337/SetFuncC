@@ -22,3 +22,4 @@ bool DeleteElement(HashTable* ht);
 bool ProcessTwoSets(ListOfSets* list, int index1, int index2);
 SetNode MergeTwoSets(SetNode* Set1, SetNode* Set2);
 SetNode IntersectTwoSets(SetNode* set1, SetNode* set2);
+SetNode DifferenceTwoSets(SetNode* set1, SetNode* set2);

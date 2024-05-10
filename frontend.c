@@ -92,7 +92,7 @@ void AskNameOfSet(char* str) {
 	//return name;
 }
 void printNode(SetNode* node, bool ShowHashTable) {
-	printf("[%d]  ", node->num+1);
+	printf("[%d]  ", node->num + 1);
 	printSet(node->ht, node->name);
 	printf("\n");
 	if (ShowHashTable) printHashTable(node->ht);
@@ -112,14 +112,14 @@ void OptionPeekedMenu(int key, ListOfSets* list) {
 	if (key == 27) {
 		exit(0);
 	}
-	else if (48<=key && key<= 57) { // 1
+	else if (48 <= key && key <= 57) { // 1
 		SetOptinsMunu(list, key - 49);
 	}
 	else if (key == 32) {
 		SetOptinsMunu(list, 32);
 	}
 }
-bool ProcessTwoSets(ListOfSets* list, int index1,int index2) {
+bool ProcessTwoSets(ListOfSets* list, int index1, int index2) {
 	printf("\nChosen sets:\n\n");
 	printNode(&list->SetArray[index1], false);
 	printNode(&list->SetArray[index2], false);
@@ -127,9 +127,9 @@ bool ProcessTwoSets(ListOfSets* list, int index1,int index2) {
 	int peeked = _getch();
 	SetNode node;
 
-	if (peeked == 49) {
-		
-		
+	if (peeked == 49) { //Union
+
+
 		node = MergeTwoSets(&list->SetArray[index1], &list->SetArray[index2]);
 		node.num = 0;
 		sprintf(node.name, "\n\nUnioned set \"% s - % s\"", list->SetArray[index1].name, list->SetArray[index2].name);
@@ -143,6 +143,15 @@ bool ProcessTwoSets(ListOfSets* list, int index1,int index2) {
 		sprintf(node.name, "\n\Intersected set \"% s - % s\"", list->SetArray[index1].name, list->SetArray[index2].name);
 		printNode(&node, false);
 	}
+	else if (peeked == 51) { // Difference
+		node = DifferenceTwoSets(&list->SetArray[index1], &list->SetArray[index2]);
+		node.num = 0;
+		sprintf(node.name, "\n\Set after difference operation \"% s - % s\"", list->SetArray[index1].name, list->SetArray[index2].name);
+		printNode(&node, false);
+	}
+	else {
+		printf("wrong key, try again..\n\n");
+	}
 	_getch();
 }
 bool SetOptinsMunu(ListOfSets* list, int index) {
@@ -155,21 +164,26 @@ bool SetOptinsMunu(ListOfSets* list, int index) {
 		scanf("%d*c", &Set2);
 		//printf("set1 = %d\nset2 = %d", Set1, Set2);
 		//_getch();
-		system("cls"); 
-		if (!(1<=Set1 && Set1<=10 && 1 <= Set2 && Set2 <= 10)) return false;
-		
-		if (ProcessTwoSets(list, Set1-1, Set2-1)) return true;
+		system("cls");
+		if (!(1 <= Set1 && Set1 <= 10 && 1 <= Set2 && Set2 <= 10)) return false;
+
+		if (ProcessTwoSets(list, Set1 - 1, Set2 - 1)) return true;
 		else return false;
 	}
 
 	system("cls");
 	//printf("[%d] - ", index);
-	if (list->SetArray[index].ht == NULL) {
+	if (list->SetArray[index].ht == NULL || strcmp(list->SetArray[index].name, "<empty") == 0) {
 		list->SetArray[index].ht = CreateHashTable(32);
 		printf("Set is empty. Please, enter name to new set: ");
 		//_getch();
+		//while (getchar() != '\n');
+		
+		
 		scanf("%[^\n]%*c", list->SetArray[index].name);
-		printf("\nNew set successfully created!\n\n");
+
+		
+		printf("\nNew set successfully created!\n\n"); //sometimes dont work!!11!!s
 
 	}
 	printNode(&list->SetArray[index], false);
@@ -200,10 +214,12 @@ bool SetOptinsMunu(ListOfSets* list, int index) {
 		}
 	}
 	else if (peeked == 51) {
+
 		system("cls");
 		printNode(&list->SetArray[index], true);
 		printf("\n\nEnter any key to return to main menu..");
 		_getch();
+
 	}
 	
 	else {
@@ -280,5 +296,16 @@ SetNode IntersectTwoSets(SetNode* set1, SetNode* set2) {
 	result.ht = IntersectHashTables(set1->ht, set2->ht);
 
 
+	return result;
+}
+
+SetNode DifferenceTwoSets(SetNode* set1, SetNode* set2) {
+	//printNode(set1, true);
+	//printNode(set2, true); //debug, meh
+	SetNode result;
+	result.ht = MergeHashTables(set1->ht, set2->ht);
+	SetNode dubles;
+	dubles.ht = IntersectHashTables(set1->ht, set2->ht);
+	DeleteElementsThatContainInSecondHashTable(result.ht, dubles.ht);
 	return result;
 }

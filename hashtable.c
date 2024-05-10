@@ -186,10 +186,30 @@ HashTable* MergeHashTables(HashTable* ht1, HashTable* ht2) {
 	return result;
 }
 
+
+
 HashTable* IntersectHashTables(HashTable* ht1, HashTable* ht2) {
 	if (ht1 == NULL && ht2 == NULL) {
 		return CreateHashTable(32);
 	}
+	else if (ht1 == NULL || ht2 == NULL) {
+		
+		if (ht1 == NULL) {
+			HashTable* result = CreateHashTable(ht2->size);
+			for (int i = 0; i < ht2->size; i++) {
+				if (ht2->array[i] != NULL) InsertHashTable(result, ht2->array[i]->value);
+			}
+			return result;
+		}
+		else if (ht2 == NULL) {
+			HashTable* result = CreateHashTable(ht1->size);
+			for (int i = 0; i < ht1->size; i++) {
+				if (ht1->array[i] != NULL) InsertHashTable(result, ht1->array[i]->value);
+			}
+			return result;
+		}
+	} 
+
 	int size = 0;
 	size += ht1 == NULL ? 0 : ht1->size;
 	size += ht2 == NULL ? 0 : ht2->size;
@@ -197,9 +217,21 @@ HashTable* IntersectHashTables(HashTable* ht1, HashTable* ht2) {
 
 	for (int i = 0; i < ht1->size; i++) {
 		for (int j = 0; j < ht2->size; j++) {
-			if (EqualData(ht1->array[i]->value, ht2->array[i]->value)) InsertHashTable(result, ht2->array[i]->value);
+			if (ht1->array[i] != NULL && ht2->array[i] != NULL) {
+				if (EqualData(ht1->array[i]->value, ht2->array[i]->value)) {
+					InsertHashTable(result, ht2->array[i]->value);
+				}
+			}
+			
 		}
 	}
-	
 	return result;
+}
+
+
+void DeleteElementsThatContainInSecondHashTable(HashTable* ht1, HashTable* ht2) {
+	for (int i = 0; i < ht2->size; i++) {
+		if (ht2->array[i] != NULL) removeElement(ht1, ht2->array[i]->value);
+	}
+
 }
