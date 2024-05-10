@@ -185,3 +185,21 @@ HashTable* MergeHashTables(HashTable* ht1, HashTable* ht2) {
 
 	return result;
 }
+
+HashTable* IntersectHashTables(HashTable* ht1, HashTable* ht2) {
+	if (ht1 == NULL && ht2 == NULL) {
+		return CreateHashTable(32);
+	}
+	int size = 0;
+	size += ht1 == NULL ? 0 : ht1->size;
+	size += ht2 == NULL ? 0 : ht2->size;
+	HashTable* result = CreateHashTable(size);
+
+	for (int i = 0; i < ht1->size; i++) {
+		for (int j = 0; j < ht2->size; j++) {
+			if (EqualData(ht1->array[i]->value, ht2->array[i]->value)) InsertHashTable(result, ht2->array[i]->value);
+		}
+	}
+	
+	return result;
+}

@@ -125,23 +125,25 @@ bool ProcessTwoSets(ListOfSets* list, int index1,int index2) {
 	printNode(&list->SetArray[index2], false);
 	printf("\nEnter operation: 1-Union, 2-Intersection, 3-Difference\n");
 	int peeked = _getch();
-
+	SetNode node;
 
 	if (peeked == 49) {
 		
-		if (index1 == index2) return false;
-		if (index1 < index2) {
-			list->SetArray[index1] = MergeTwoSets(&list->SetArray[index1], &list->SetArray[index2]);
-			list->SetArray[index2].ht = NULL;
-			strcpy(list->SetArray[index2].name, "<empty>");
-		}
-		else {
-			list->SetArray[index2] = MergeTwoSets(&list->SetArray[index1], &list->SetArray[index2]);
-			list->SetArray[index1].ht = NULL;
-			strcpy(list->SetArray[index1].name, "<empty>");
-		}
+		
+		node = MergeTwoSets(&list->SetArray[index1], &list->SetArray[index2]);
+		node.num = 0;
+		sprintf(node.name, "\n\nUnioned set \"% s - % s\"", list->SetArray[index1].name, list->SetArray[index2].name);
+		printNode(&node, false);
+		freeHashTable(node.ht, node.ht->size);
 	}
+	else if (peeked == 50) { // Intersection
 
+		node = IntersectTwoSets(&list->SetArray[index1], &list->SetArray[index2]);
+		node.num = 0;
+		sprintf(node.name, "\n\Intersected set \"% s - % s\"", list->SetArray[index1].name, list->SetArray[index2].name);
+		printNode(&node, false);
+	}
+	_getch();
 }
 bool SetOptinsMunu(ListOfSets* list, int index) {
 	if (index == 32) {
@@ -272,4 +274,11 @@ SetNode MergeTwoSets(SetNode* Set1, SetNode* Set2) {
 	//freeSetNode(set1);
 	//reeSetNode(set2);
 	//return setnode;
+}
+SetNode IntersectTwoSets(SetNode* set1, SetNode* set2) {
+	SetNode result;
+	result.ht = IntersectHashTables(set1->ht, set2->ht);
+
+
+	return result;
 }
