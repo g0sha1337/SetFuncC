@@ -69,7 +69,7 @@ void InsertHashTable(HashTable* ht, Data value) {
 			}
 		}
 		else if (value.type == CHAR_TYPE) {
-			if (!(strcmp(ht->array[index]->value.Char, value.Char))) {
+			if (!(strcmp(ht->array[index]->value.Char, value.Char) == 0)) {
 				newNode->next = ht->array[index];
 				ht->array[index] = newNode;
 			}
@@ -100,11 +100,11 @@ bool removeElement(HashTable* ht, Data element) {
 			return true;
 		}
 		
-		if (curr->next != (void*)0) { //yaya ima stupid prog kid that likes bad code
+		//if (curr->next != (void*)0) { //yaya ima stupid prog kid that likes bad code
 
 			prev = curr;
 			curr = curr->next;
-		}
+		//}
 	}
 	return false;
 
@@ -176,10 +176,10 @@ HashTable* MergeHashTables(HashTable* ht1, HashTable* ht2) {
 	size += ht2 == NULL ? 0 : ht2->size;
 	HashTable* result = CreateHashTable(size);
 
-	for (int i = 0; i < ht1->size; i++) {
+	for (int i = 0; i < (ht1 != NULL ? ht1->size : 0); i++) {
 		if (ht1->array[i] != NULL) InsertHashTable(result, ht1->array[i]->value);
 	}
-	for (int i = 0; i < ht2->size; i++) {
+	for (int i = 0; i < (ht2 != NULL ? ht2->size : 0); i++) {
 		if (ht2->array[i] != NULL) InsertHashTable(result, ht2->array[i]->value);
 	}
 

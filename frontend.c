@@ -159,9 +159,9 @@ bool SetOptinsMunu(ListOfSets* list, int index) {
 		//system("cls");
 		int Set1, Set2;
 		printf("Select thirst set to further operation  ");
-		scanf("%d*c", &Set1);
+		scanf("%d%*c", &Set1);
 		printf("Select second set to further operation  ");
-		scanf("%d*c", &Set2);
+		scanf("%d%*c", &Set2);
 		//printf("set1 = %d\nset2 = %d", Set1, Set2);
 		//_getch();
 		system("cls");
@@ -232,6 +232,7 @@ bool InputNewElement(HashTable* ht) {
 	printf("Enter type of element that you wanna add\n1-INTEGGER\n2-STRING\n3-FLOAT\n\n");
 	Data data;
 	int peeked = _getch();
+	fflush(stdin);
 	if (peeked == 49) {
 		data.type = INT_TYPE;
 		printf("\nEnter value (integger): ");
@@ -258,6 +259,7 @@ bool DeleteElement(HashTable* ht) {
 	printf("Enter element for deletion\n1-INTEGGER\n2-STRING\n3-FLOAT\n\n");
 	Data data;
 	int peeked = _getch();
+	fflush(stdin);
 	if (peeked == 49) {
 		data.type = INT_TYPE;
 		printf("\nEnter value (integger): ");
@@ -303,7 +305,8 @@ SetNode DifferenceTwoSets(SetNode* set1, SetNode* set2) {
 	//printNode(set1, true);
 	//printNode(set2, true); //debug, meh
 	SetNode result;
-	result.ht = MergeHashTables(set1->ht, set2->ht);
+	result.ht = MergeHashTables(set1->ht, NULL);
+
 	SetNode dubles;
 	dubles.ht = IntersectHashTables(set1->ht, set2->ht);
 	DeleteElementsThatContainInSecondHashTable(result.ht, dubles.ht);
