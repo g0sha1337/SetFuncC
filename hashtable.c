@@ -168,7 +168,7 @@ bool isElementInSet(HashTable* ht, Data element) {
 
 HashTable* MergeHashTables(HashTable* ht1, HashTable* ht2) {
 	if (ht1 == NULL && ht2 == NULL) {
-		return CreateHashTable(32);
+		return CreateHashTable(DEFAULT_HASHTABLESIZE);
 	}
 
 	int size = 0;
@@ -177,20 +177,44 @@ HashTable* MergeHashTables(HashTable* ht1, HashTable* ht2) {
 	HashTable* result = CreateHashTable(size);
 
 	for (int i = 0; i < (ht1 != NULL ? ht1->size : 0); i++) {
-		if (ht1->array[i] != NULL) InsertHashTable(result, ht1->array[i]->value);
+
+		if (ht1->array[i] != NULL) {
+			InsertHashTable(result, ht1->array[i]->value);
+			
+			if (ht1->array[i]->next != NULL) { //case with collision 
+
+				Node* temp = ht1->array[i];
+
+				while (temp->next != NULL) {
+					temp = temp->next;
+					InsertHashTable(result, temp->value);
+				}
+			}
+
+		}
 	}
 	for (int i = 0; i < (ht2 != NULL ? ht2->size : 0); i++) {
-		if (ht2->array[i] != NULL) InsertHashTable(result, ht2->array[i]->value);
+		if (ht2->array[i] != NULL) {
+
+			InsertHashTable(result, ht2->array[i]->value);
+
+			if (ht2->array[i]->next != NULL) { //case with collision 
+
+				Node* temp = ht2->array[i];
+
+				while (temp->next != NULL) {
+					temp = temp->next;
+					InsertHashTable(result, temp->value);
+				}
+			}
+		}
 	}
 
 	return result;
 }
-
-
-
 HashTable* IntersectHashTables(HashTable* ht1, HashTable* ht2) {
 	if (ht1 == NULL && ht2 == NULL) {
-		return CreateHashTable(32);
+		return CreateHashTable(DEFAULT_HASHTABLESIZE);
 	}
 	else if (ht1 == NULL || ht2 == NULL) {
 		
@@ -219,6 +243,7 @@ HashTable* IntersectHashTables(HashTable* ht1, HashTable* ht2) {
 		for (int j = 0; j < ht2->size; j++) {
 			if (ht1->array[i] != NULL && ht2->array[i] != NULL) {
 				if (EqualData(ht1->array[i]->value, ht2->array[i]->value)) {
+							
 					InsertHashTable(result, ht2->array[i]->value);
 				}
 			}
@@ -227,11 +252,21 @@ HashTable* IntersectHashTables(HashTable* ht1, HashTable* ht2) {
 	}
 	return result;
 }
-
-
 void DeleteElementsThatContainInSecondHashTable(HashTable* ht1, HashTable* ht2) {
 	for (int i = 0; i < ht2->size; i++) {
-		if (ht2->array[i] != NULL) removeElement(ht1, ht2->array[i]->value);
+		if (ht2->array[i] != NULL) {
+			removeElement(ht1, ht2->array[i]->value);
+			if (ht2->array[i]->next != NULL) {
+				Node* temp = ht2->array[i];
+				while (temp->next != NULL) {
+					temp = temp->next;
+					removeElement(ht1, temp->value);
+				}
+			}
+
+
+
+		}
 	}
 
 }

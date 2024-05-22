@@ -174,7 +174,7 @@ bool SetOptinsMunu(ListOfSets* list, int index) {
 	system("cls");
 	//printf("[%d] - ", index);
 	if (list->SetArray[index].ht == NULL || strcmp(list->SetArray[index].name, "<empty") == 0) {
-		list->SetArray[index].ht = CreateHashTable(32);
+		list->SetArray[index].ht = CreateHashTable(DEFAULT_HASHTABLESIZE);
 		printf("Set is empty. Please, enter name to new set: ");
 		//_getch();
 		//while (getchar() != '\n');
